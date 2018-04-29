@@ -128,4 +128,20 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state);
 /* Set array position of each player who won (remember ties!) to
    1, others to 0 */
 
+
+/*
+Assignment 2 4/13/2018
+Below are newly added functions that are created for the 5 cards
+List of cards modified are here:
+    *Smithy   
+	*Adventurer
+	*Village
+	*Great Hall
+	*Council Room
+*/
+void caseSmithy(int currentPlayer, int handPos, struct gameState *state);
+void caseAdventurer(int drawntreasure, struct gameState *state, int currentPlayer, int temphand[MAX_HAND], int z);
+void caseVillage(int currentPlayer, struct gameState *state, int handPos);
+void caseGreatHall(int currentPlayer, struct gameState *state, int handPos);
+void caseCouncilRoom(int currentPlayer, struct gameState *state, int handPos);
 #endif
