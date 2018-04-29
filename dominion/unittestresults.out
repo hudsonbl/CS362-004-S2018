@@ -1,0 +1,69 @@
+------------Testing Smithy-----------------
+Deck before card draw 4 compared to after but before smithy card is discarded 3
+Deck after discard 3
+
+------------Testing Adventurer-----------------
+Deck before card draw 2 compared to after but before smithy card is discarded 1
+Deck after discard 1
+
+------------Testing Council Room Buys-----------------
+Room Buys before 0 compared to after 2
+
+------------Testing Council Room-----------------
+Deck before card draw 2 compared to after but before council card is discarded 1
+Deck after discard 1
+
+------------Testing Village Actions-----------------
+Deck before actions %d compared to after %d\n
+
+------------Testing Village Card Draws-----------------
+Deck before card draw 5 compared to after but before smithy card is discarded 4
+Deck after discard 4
+
+------------First Test---- Coins--------
+	          Coins: 12         
+-------------Second Test------The Cards are truely shuffled--------
+Testing first card: test
+	
+
+This will be ran multiple times to ensure that the first case is different. 
+I am using basic analysis implying if p is true then p+1 is also true.
+In this case I am implying that the rest of the cards are most likely shuffled
+-----------------Third Test----------------
+          Deck Count: 500    Should be: 500
+
+Test for curse worked!
+Test for estate worked!
+Test for duchy worked!
+Test for province worked!
+Test for copper worked!
+Test for silver worked!
+Test for gold worked!
+Test for adventurer worked!
+Test for council_room worked!
+Test for feast worked!
+Test for gardens worked!
+Test for mine worked!
+Test for remodel worked!
+Test for smithy worked!
+Test for village worked!
+Test for baron worked!
+Test for great_hall worked!
+Test for minion worked!
+Test for steward worked!
+Test for tribute worked!
+Test for ambassador worked!
+Test for cutpurse worked!
+Test for embargo worked!
+Test for outpost worked!
+Test for salvager worked!
+Test for sea_hag worked!
+Test for treasure_map worked!
+
+----------Test----------------
+coin count:13
+-----------------Test-----Treasure map adds extra coins----------
+Found Treasure map
+
+-----------Test----------------
+Otherwise Test Passed if print statement above is not executed!
