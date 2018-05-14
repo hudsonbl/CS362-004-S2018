@@ -1,0 +1,95 @@
+All Tests OK!
+------------Testing Smithy-----------------
+Deck before card draw 5 compared to after but before smithy card is discarded 2003
+Deck after discard 2003
+File 'randomtestadventurer.c'
+Lines executed:86.05% of 43
+Creating 'randomtestadventurer.c.gcov'
+
+        -:    0:Source:randomtestadventurer.c
+        -:    0:Graph:randomtestadventurer.gcno
+        -:    0:Data:randomtestadventurer.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+     2000:    7:void passGameState(struct gameState *state) {
+     2000:    8:	state->deckCount[0]--;
+     2000:    9:}
+        -:   10:
+        -:   11:
+        -:   12://======================================Test Adventurer=============================================
+        1:   13:void newcaseAdventurer(int drawntreasure, struct gameState *state, int currentPlayer, int temphand[MAX_HAND], int z) {
+        -:   14:
+        -:   15:	//--------------------------Input Gathering-------------------------------
+        1:   16:	int numCardsBefore = state->deckCount[currentPlayer];
+        -:   17:	int cardDrawn;
+        -:   18:	int i;
+        4:   19:	while (drawntreasure<2) {
+        -:   20:
+        -:   21:
+        2:   22:		if (state->deckCount[currentPlayer] <1) {//if the deck is empty we need to shuffle discard and add to deck
+    #####:   23:			shuffle(currentPlayer, state);
+        -:   24:		}
+        2:   25:		drawCard(currentPlayer, state);
+        2:   26:		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];//top card of hand is most recently drawn card.
+        2:   27:		if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+        2:   28:			drawntreasure++;
+        -:   29:		else {
+    #####:   30:			temphand[z] = cardDrawn;
+    #####:   31:			state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
+    #####:   32:			z++;
+        -:   33:		}
+        -:   34:	}
+        -:   35:	//-------------------RandomTesting---------------------------
+     2001:   36:	for (i = 0; i < 2000; i++) {
+     2000:   37:		state->deckCount[currentPlayer]++;
+     2000:   38:		passGameState(&state);
+        -:   39:	}
+        1:   40:	printf("All Tests OK!\n");
+        -:   41:	//-----------------------Input Gathering--------------------
+        1:   42:	int numCardsAfter = state->deckCount[currentPlayer];
+        -:   43:
+        -:   44:
+        2:   45:	while (z - 1 >= 0) {
+    #####:   46:		state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[z - 1]; // discard all cards in play that have been drawn
+    #####:   47:		z = z - 1;
+        -:   48:	}
+        -:   49:	//------------------------Input Gathering------------------
+        -:   50:
+        1:   51:	int numCardsAfterDiscard = state->deckCount[currentPlayer];
+        1:   52:	printf("------------Testing Smithy-----------------\n");
+        1:   53:	printf("Deck before card draw %d compared to after but before smithy card is discarded %d\n", numCardsBefore, numCardsAfter);
+        1:   54:	printf("Deck after discard %d\n", numCardsAfterDiscard);
+        -:   55:
+        1:   56:}
+        -:   57:
+        -:   58:
+        1:   59:int main() {
+        1:   60:	int newCards = 0;
+        1:   61:	int discarded = 1;
+        1:   62:	int xtraCoins = 0;
+        1:   63:	int shuffledCards = 0;
+        1:   64:	int currentPlayer = 0;
+        1:   65:	int temphand = 0;
+        -:   66:	int i, j, m;
+        1:   67:	int handpos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
+        -:   68:	int remove1, remove2;
+        1:   69:	int seed = 1000;
+        1:   70:	int numPlayers = 2;
+        1:   71:	int thisPlayer = 0;
+        -:   72:	struct gameState testG;
+        1:   73:	int k[10] = { adventurer, embargo, village, minion, mine, cutpurse,
+        -:   74:		sea_hag, tribute, smithy, council_room };
+        -:   75:
+        -:   76:
+        1:   77:	initializeGame(numPlayers, k, seed, &testG);
+        -:   78:
+        1:   79:	newcaseAdventurer(0, &testG, currentPlayer, temphand, 0);
+        -:   80:
+        1:   81:	return 0;
+        -:   82:}
