@@ -1,0 +1,63 @@
+------------Testing Smithy-----------------
+Deck before card draw 5 compared to after but before smithy card is discarded 2
+Deck after discard 2
+File 'cardtest1.c'
+Lines executed:100.00% of 24
+Creating 'cardtest1.c.gcov'
+
+        -:    0:Source:cardtest1.c
+        -:    0:Graph:cardtest1.gcno
+        -:    0:Data:cardtest1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/**/
+        -:    2:
+        -:    3:#include "dominion.h"
+        -:    4:#include "dominion_helpers.h"
+        -:    5:#include <string.h>
+        -:    6:#include <stdio.h>
+        -:    7:#include <assert.h>
+        -:    8:#include "rngs.h"
+        -:    9:
+        -:   10://======================================Test Smithy=============================================
+        1:   11:void caseSmithy(int currentPlayer, int handPos, struct gameState *state) {
+        -:   12:	//---------------Gathering Test Inputs----------------
+        1:   13:	int numCardsBefore = state->deckCount[currentPlayer];
+        -:   14:	int i;
+        4:   15:	for (i = 0; i < 3; i++)
+        -:   16:	{
+        3:   17:		drawCard(currentPlayer, state);
+        -:   18:	}
+        1:   19:	int numCardsAfter = state->deckCount[currentPlayer];
+        -:   20:	//discard card from hand
+        1:   21:	discardCard(handPos, currentPlayer, state, 0);
+        1:   22:	int numCardsAfterDiscard = state->deckCount[currentPlayer];
+        1:   23:	printf("------------Testing Smithy-----------------\n");
+        1:   24:	printf("Deck before card draw %d compared to after but before smithy card is discarded %d\n", numCardsBefore, numCardsAfter);
+        1:   25:	printf("Deck after discard %d\n", numCardsAfterDiscard);
+        1:   26:}
+        -:   27:
+        -:   28:
+        1:   29:int main() {
+        1:   30:	int newCards = 0;
+        1:   31:	int discarded = 1;
+        1:   32:	int xtraCoins = 0;
+        1:   33:	int shuffledCards = 0;
+        -:   34:
+        -:   35:	int i, j, m;
+        1:   36:	int handpos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
+        -:   37:	int remove1, remove2;
+        1:   38:	int seed = 1000;
+        1:   39:	int numPlayers = 2;
+        1:   40:	int thisPlayer = 0;
+        -:   41:	struct gameState testG;
+        1:   42:	int k[10] = { adventurer, embargo, village, minion, mine, cutpurse,
+        -:   43:		sea_hag, tribute, smithy, council_room };
+        -:   44:
+        -:   45:
+        1:   46:	initializeGame(numPlayers, k, seed, &testG);
+        -:   47:
+        1:   48:	caseSmithy(thisPlayer, handpos, &testG);
+        -:   49:
+        1:   50:	return 0;
+        -:   51:}

@@ -1,0 +1,72 @@
+        -:    0:Source:cardtest3.c
+        -:    0:Graph:cardtest3.gcno
+        -:    0:Data:cardtest3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+        -:    7:
+        -:    8:
+        -:    9://======================================Test Council Room=============================================
+        -:   10:
+        1:   11:void caseCouncilRoom(int currentPlayer, struct gameState *state, int handPos) {
+        -:   12:	//+4 Cards
+        -:   13:	//--------------Input Gathering------------------
+        1:   14:	int numCardsBefore = state->deckCount[currentPlayer];
+        -:   15:	int i;
+        5:   16:	for (i = 0; i < 4; i++)
+        -:   17:	{
+        4:   18:		drawCard(currentPlayer, state);
+        -:   19:	}
+        1:   20:	int numCardsAfter = state->deckCount[currentPlayer];
+        -:   21:	//+1 Buy
+        1:   22:	int numberBuysBefore = state->numBuys;
+        1:   23:	state->numBuys++;
+        1:   24:	int numberBuysAfter = state->numBuys;
+        1:   25:	printf("------------Testing Council Room Buys-----------------\n");
+        1:   26:	printf("Room Buys before %d compared to after %d\n", numberBuysBefore, numberBuysAfter);
+        -:   27:
+        -:   28:	//Each other player draws a card
+        3:   29:	for (i = 0; i < state->numPlayers; i++)
+        -:   30:	{
+        2:   31:		if (i != currentPlayer)
+        -:   32:		{
+        1:   33:			drawCard(i, state);
+        -:   34:		}
+        -:   35:	}
+        -:   36:
+        -:   37:	//put played card in played card pile
+        1:   38:	discardCard(handPos, currentPlayer, state, 0);
+        1:   39:	int numCardsAfterDiscard = state->deckCount[currentPlayer];
+        1:   40:	printf("------------Testing Council Room-----------------\n");
+        1:   41:	printf("Deck before card draw %d compared to after but before council card is discarded %d\n", numCardsBefore, numCardsAfter);
+        1:   42:	printf("Deck after discard %d\n", numCardsAfterDiscard);
+        1:   43:}
+        -:   44:
+        1:   45:int main() {
+        1:   46:	int newCards = 0;
+        1:   47:	int discarded = 1;
+        1:   48:	int xtraCoins = 0;
+        1:   49:	int shuffledCards = 0;
+        -:   50:
+        -:   51:	int i, j, m;
+        1:   52:	int handpos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
+        -:   53:	int remove1, remove2;
+        1:   54:	int seed = 1000;
+        1:   55:	int numPlayers = 2;
+        1:   56:	int thisPlayer = 0;
+        -:   57:	struct gameState testG;
+        1:   58:	int k[10] = { adventurer, embargo, village, minion, mine, cutpurse,
+        -:   59:		sea_hag, tribute, smithy, council_room };
+        -:   60:
+        -:   61:
+        1:   62:	initializeGame(numPlayers, k, seed, &testG);
+        -:   63:
+        1:   64:	caseCouncilRoom(0, &testG, 0);
+        -:   65:
+        1:   66:	return 0;
+        -:   67:}
